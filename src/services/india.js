@@ -14,3 +14,70 @@ export const fetchUpdates = async () => {
     console.log(error);
   }
 };
+
+export const fetchDailyData = async () => {
+  try {
+    const { data } = await axios.get(DAILY_DATA);
+    const total = data.cases_time_series;
+    const date = total.map((day) => day.date);
+
+    const totalConfirmed = total
+      .map((day) => day.dailyconfirmed)
+      .map((confirmed, index) => {
+        return {
+          x: date[index],
+          y: confirmed,
+        };
+      });
+
+    const totalDeceased = total
+      .map((day) => day.dailydeceased)
+      .map((deceased, index) => {
+        return {
+          x: date[index],
+          y: deceased,
+        };
+      });
+
+    const totalRecovered = total
+      .map((day) => day.dailyrecovered)
+      .map((recovered, index) => {
+        return {
+          x: date[index],
+          y: recovered,
+        };
+      });
+      
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchTotalData = async () => {
+  try {
+    const { data } = await axios.get(DAILY_DATA);
+    const total = data.cases_time_series;
+    const date = total.map((day) => day.date);
+
+    const totalConfirmed = total
+      .map((day) => day.totalconfirmed)
+      .map((confirmed, index) => {
+        return {
+          x: date[index],
+          y: confirmed,
+        };
+      });
+
+    const totalDeceased = total
+      .map((day) => day.totaldeceased)
+      .map((deceased, index) => {
+        return {
+          x: date[index],
+          y: deceased,
+        };
+      });
+
+  } catch (error) {
+    console.log(error);
+  }
+};
